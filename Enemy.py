@@ -218,6 +218,12 @@ class Enemy_3(Enemy):
     def add_ground_enemy(self):
         # liikuvad teod  - x-kordinaat, y-kordinaat, limiit-left, limiit-right, kiirus
         foxy = [[300, 450 , 170,550,3],
+                [1220, 450 , 1020, 1675,3],
+                [1520, 450 , 1020, 1675,3],
+                [1220, 450 , 1020, 1675,5],
+                [1520, 450 , 1020, 1675,5],
+                [2000, 450 , 1845, 2005,3],
+                [1850, 450 , 1845, 2005,3],
                  ]
         for fox in foxy:
             enemy = Enemy_stats(fox[0], fox[1], 6 , fox[2], fox[3], fox[4])
@@ -225,5 +231,5 @@ class Enemy_3(Enemy):
     def boss_axe_throw(self):
         self.enemy_flying.add(Enemy_stats(2703 + self.world_shift, 330, 5,0,0,0))          
     def add_enemy(self):
-        enemy = Enemy_stats(2670, 180, "boss" , 0,0, 0)
+        enemy = Enemy_stats(2670 + self.world_shift, 180, "boss" , 0,0, 0)
         self.boss.add(enemy)

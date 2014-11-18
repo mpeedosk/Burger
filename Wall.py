@@ -264,6 +264,14 @@ class Level_3(Level):
                    [False, 2308, 5, 0, 500],
                    [False, 400, 5, 2738, 500],
                    [False, 5, 500, 2990, 0],
+                   #
+                   ["World\Platform_cave_1.png", 150, 20, 390, 320],
+                   ["World\Platform_cave_1.png", 150, 20, 630, 220],
+                   ["World\Platform_cave_1.png", 150, 20, 870, 120],
+                   ["World\Rock2.png", 48, 174, 972, 326],
+                   ["World\Rock2.png", 30, 70, 1825, 430],
+                   ["World\Rock2.png", 30, 113, 2145, 387],
+
                    ]
         for i in objects:
             item = Wall(i[0],i[1],i[2])
@@ -271,6 +279,38 @@ class Level_3(Level):
             item.rect.y = i[4]
             item.player = self.player
             self.wall_list.add(item)
+            
+        moving_leftright = [["World\Plat_cave_2.png", 115, 18, 1100, 250, 1350, 5],
+                            #["World\RockSD.png", 145, 40, 2000, 430, 2200, 5],
+                            ]
+        
+        for i in moving_leftright:
+            item = Moving_Wall(i[0], i[1],i[2])
+            item.rect.x = i[3]
+            item.rect.y= i[4]
+            item.limit_left = i[3]
+            item.limit_right = i[5]
+            item.left_right = i[6]
+            item.player = self.player
+            item.level = self
+            self.wall_list.add(item)
+            
+        falling =[["World\Plat_cave_2.png", 113, 18, 1550, 120,1,1],
+                  ["World\Plat_cave_2.png", 113, 18, 1900, 200,1,1],                  
+    #              ["World\Plat_dung_2.png", 113, 18, 1750, 190,2,1],
+     #             ["World\Plat_dung_4.png", 113, 18, 2000, 240,5,2],
+      #            ["World\Plat_dung_4.png", 113, 18, 2400, 440,5,3],
+                    ]
+        for i in falling:
+            item = Falling_Plat(i[0],i[1],i[2])
+            item.rect.x = i[3]
+            item.rect.y = i[4]
+            item.type = i[6]
+            item.player = self.player
+            item.fallspeed = i[5]
+            item.wall_list = self.wall_list
+            item.falling = False
+            self.wall_list.add(item)           
     def add_boss_wall(self):
         wall = Wall(False, 5,555)
         wall.rect.x = 2180 + self.world_shift 
@@ -281,7 +321,7 @@ class Level_3(Level):
             if wall.rect.height == 555:
                 self.wall_list.remove(wall)
     def add_plat_up(self,up_down):
-        item = UpDown_Plat("World\Plat_dung_2.png", 115, 18)
+        item = UpDown_Plat("World\Plat_cave_2.png", 115, 18)
 
         if up_down == "down":
             item.rect.x = 2570 + self.world_shift

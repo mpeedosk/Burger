@@ -28,21 +28,11 @@ def joke_font_size(jokelist, joke_nr):
     return joke_size
 
 class PowerUp(pygame.sprite.Sprite):
-    def __init__(self, powertype):
+    def __init__(self,filename):
         pygame.sprite.Sprite.__init__(self)
-        if powertype == 1:
-            self.image = pygame.image.load('Paper.png').convert_alpha()
-        elif powertype == 2:
-            self.image = pygame.image.load('Star2.png').convert_alpha()
-        elif powertype == 3:
-            self.image = pygame.image.load('Orb.png').convert_alpha()
-        elif powertype == 4:
-            self.image = pygame.image.load('Lever_Right.png').convert_alpha()
-        elif powertype == 5:
-            self.image = pygame.image.load('Lever_Left.png').convert_alpha()
-
+        self.image = pygame.image.load(filename).convert_alpha()
         self.rect = self.image.get_rect()
-        self.type = powertype
+        self.type = filename
 
 class Powerlvl(object):
     world_shift = 0
@@ -58,27 +48,34 @@ class Powerlvl(object):
         for power in self.power_list:
             power.rect.x += x
     def joke_joke(self,screen, joke_nr):
-            joke_font = joke_font_size(joke, joke_nr)
-            jokefont = pygame.font.Font('norwester.otf', joke_font)
-            text_x = 400 - jokefont.size(joke[joke_nr])[0]/2
-            return joke[joke_nr], text_x , jokefont
+        joke_font = joke_font_size(joke, joke_nr)
+        jokefont = pygame.font.Font('norwester.otf', joke_font)
+        text_x = 400 - jokefont.size(joke[joke_nr])[0]/2
+        return joke[joke_nr], text_x , jokefont
     def joke_punch(self,screen, joke_nr):
-            joke_font = joke_font_size(punchline, joke_nr)
-            jokefont = pygame.font.Font('norwester.otf', joke_font)
-            text_x = 400 - jokefont.size(punchline[joke_nr])[0]/2
-            return punchline[joke_nr], text_x , jokefont
+        joke_font = joke_font_size(punchline, joke_nr)
+        jokefont = pygame.font.Font('norwester.otf', joke_font)
+        text_x = 400 - jokefont.size(punchline[joke_nr])[0]/2
+        return punchline[joke_nr], text_x , jokefont
+    def add_joke(self,x,y):
+        power = PowerUp('Paper.png')
+        power.rect.x = x + self.world_shift
+        power.rect.y = y 
+        power.player = self.player  
+        self.power_list.add(power)
+        
 class Power_1(Powerlvl):
     def __init__(self, player):
         Powerlvl.__init__(self,player)
         # powerupid pilt, x-kord, y-kord, 
-        powerjokes = [[1110, 265, 1],
-                    [3053, 312, 1],
-                    [4000, 180, 1],
-                    [2023, 440, 1],
-                    [1820,190, 2],
-                    [4290,140, 2],
-                    [5253,40,  2],
-                    [3405, 477, 3],
+        powerjokes = [[1110, 265,'Paper.png'],
+                    [3053, 312,'Paper.png'],
+                    [4000, 180,'Paper.png'],
+                    [2023, 440,'Paper.png'],
+                    [1820,190, 'Star2.png'],
+                    [4290,140, 'Star2.png'],
+                    [5253,40,  'Star2.png'],
+                    [3405, 477, 'Orb.png'],
                     ]
         
         for item in powerjokes:
@@ -94,17 +91,17 @@ class Power_2(Powerlvl):
         Powerlvl.__init__(self,player)
         # powerupid pilt, x-kord, y-kord, 
         powerjokes = [
-                      [1185, 280, 1],
-                      [2230, 100, 1],
-                      [3600, 300, 1],
+                      [1185, 280,'Paper.png'],
+                      [2230, 100,'Paper.png'],
+                      [3600, 300,'Paper.png'],
                       
-                      [ 370, 220, 2],
-                      [2035, 440, 2],
-                      [3600, 300, 2],
+                      [ 370, 220,'Star2.png'],
+                      [2035, 440,'Star2.png'],
+                      [3600, 300,'Star2.png'],
                     
-                      [2745, -55, 3],
+                      [2745, -55,'Orb.png'],
                       
-                      [3945, 445, 4],
+                      [3945, 445,'Lever_Right.png'],
                     ]
         for item in powerjokes:
             power = PowerUp(item[2])
@@ -113,4 +110,18 @@ class Power_2(Powerlvl):
             power.player = self.player  
             self.power_list.add(power)
 class Power_3(Powerlvl):
-    pass
+    def __init__(self, player):
+        Powerlvl.__init__(self,player)
+        # powerupid pilt, x-kord, y-kord, 
+        powerjokes = [
+                      [440, 280,'Paper.png'],
+                      [972, 280,'Paper.png'],
+                      [1580, 75,'Paper.png'],
+                      [1935, 160,'Orb.png'],
+                      ]
+        for item in powerjokes:
+            power = PowerUp(item[2])
+            power.rect.x = item[0]
+            power.rect.y = item[1]
+            power.player = self.player  
+            self.power_list.add(power)

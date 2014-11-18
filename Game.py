@@ -111,18 +111,19 @@ def game():
     level_shift = False
     ghost_sound = True
     level_limit = [-5170,-3200,-2190]
-    current_level_nr = 2
+    current_level_nr = 1
     current_level = levels[current_level_nr]
     current_enemy = enemy_level[current_level_nr]
     current_power = power_level[current_level_nr]
     current_objects = objects_level[current_level_nr]
     current_enemy.add_ground_enemy()
     plat_up_time = pygame.time.get_ticks()
-    
+    enemy_level[2].add_enemy()
+
     #player
     living = True
     mustache = False
-    player.rect.x = 1000
+    player.rect.x = 3000
     player.rect.y = 400
     player_sprite.add(player) 
     heli_level(current_level_nr)
@@ -155,7 +156,7 @@ def game():
                         player.direction = "L"
                     player.move(-6)
                     walking.play(-1)
-
+                
                 elif event.key == K_DOWN:
                    # current_enemy.boss_axe_throw()
                    # current_level.remove_boss_wall()
@@ -193,13 +194,16 @@ def game():
                             current_enemy.add_enemy()
                     else:
                         if boss_not_added:
-                            current_enemy.add_enemy()
+                          #  current_enemy.add_enemy()
                             boss_not_added = False
                     spawn_timer = pygame.time.get_ticks()
+                if current_objects.joke:
+                    current_objects.joke = False
+                    current_power.add_joke(2230, 437)
                 # Collision kontroll
                 power_collide = pygame.sprite.spritecollide(player, current_power.power_list, True)
                 for collide in power_collide:
-                    if collide.type == 1:
+                    if collide.type == 'Paper.png':
                         book_wav.play()
                         joke_play = True
                         when_joke = pygame.time.get_ticks()
@@ -213,10 +217,10 @@ def game():
                         if len(joke2)< 68: y2=2
                         else: y2 = 1
                         joketime = True
-                    elif collide.type ==2:
+                    elif collide.type == 'Star2.png':
                         stars += 1
                         star_wav.play()
-                    elif collide.type == 3:
+                    elif collide.type == 'Orb.png':
                         invinc_wav.play()
                         mustache = True
                         when_stache = pygame.time.get_ticks()
@@ -256,6 +260,7 @@ def game():
                 if boss_living:
                     if not world_shift and bomb_counter == 8:
                         current_objects.add_pot()
+                        current_power.power_list.empty()
                         bomb_counter = 0
                     if dmg_boss and living:
                             if boss_hp > 20:
@@ -277,11 +282,10 @@ def game():
                 py = player.rect.y
                 # spritede uuendamine
                 player_sprite.update(current_level.wall_list)
-                current_level.update()
                 current_objects.update()
                 current_enemy.update(px,py)
                 current_power.update()
-                if stars == 3 and current_level.world_shift <= -5170 and player.rect.x > 688:
+                if stars == 3 and current_level.world_shift <= level_limit[current_level_nr] and player.rect.x > 688:
                     if current_level_nr == 0:
                         level_shift = True
                         level_shift_time = pygame.time.get_ticks()
@@ -294,22 +298,22 @@ def game():
                         stars = 0
                         current_level = levels[current_level_nr]
                         current_power = power_level[current_level_nr]
-                        player.level = current_level
+                        current_objects = objects_level[current_level_nr]
 
-                    #elif current_level_nr == 1:
-                     #   current_level_nr = 0
-                      #  current_level = levels[current_level_nr]
-                       # player.rect.x = 20
-                if current_level_nr == 1 and current_level.world_shift < -1200 and ghost_sound:
-                    ghost_wav.play()
-                    ghost_sound = False
-                elif current_level_nr ==2 and pygame.time.get_ticks() - plat_up_time > 1500:
-                    current_level.add_plat_up("up")
-                    current_level.add_plat_up("down")
-                    if boss_living: current_enemy.boss_axe_throw()
-                    plat_up_time = pygame.time.get_ticks()
-                    bomb_counter +=1
-                    
+                        player.level = current_level
+                    elif current_level_nr == 1:
+                        level_shift = True
+                        level_shift_time = pygame.time.get_ticks()
+                        pygame.mixer.stop()
+                        pygame.mixer.music.stop()
+                        current_enemy.enemy_flying.empty
+                        current_enemy.enemy_ground.empty
+                        current_level_nr = 2
+                        player.rect.x = 100
+                        current_level = levels[current_level_nr]
+                        current_power = power_level[current_level_nr]
+                        current_objects = objects_level[current_level_nr]
+                        player.level = current_level
                 # Tausta muutmine
                 #lvl 1 lim
                # if player.rect.x > 500 and current_level.world_shift > -5170:
@@ -340,6 +344,16 @@ def game():
             ## Boss pause lõpp
             #--- kuvamised---
             # tausta kuvamine
+            current_level.update()
+            if current_level_nr == 1 and current_level.world_shift < -1200 and ghost_sound:
+                    ghost_wav.play()
+                    ghost_sound = False
+            elif current_level_nr ==2 and pygame.time.get_ticks() - plat_up_time > 1500 and level_shift == False:
+                    current_level.add_plat_up("up")
+                    current_level.add_plat_up("down")
+                    if boss_living: current_enemy.boss_axe_throw()
+                    plat_up_time = pygame.time.get_ticks()
+                    bomb_counter +=1
             current_level.draw(screen)
             current_objects.draw(screen)
             # mängija kuvamine ekraanile 
