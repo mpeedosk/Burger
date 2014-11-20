@@ -100,8 +100,6 @@ class Power_2(Powerlvl):
                       [3600, 300,'Star2.png'],
                     
                       [2745, -55,'Orb.png'],
-                      
-                      [3945, 445,'Lever_Right.png'],
                     ]
         for item in powerjokes:
             power = PowerUp(item[2])

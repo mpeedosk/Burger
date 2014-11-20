@@ -22,10 +22,13 @@ class Player(pygame.sprite.Sprite):
             self.walkingleft.append(pygame.transform.flip(pygame.image.load('Bird/Masked/frame' + str(i)+ '.png'), True, False))
         self.idle_right = pygame.image.load('Bird/Masked/Idle.png').convert_alpha()
         self.idle_left = pygame.transform.flip(pygame.image.load('Bird/Masked/Idle.png'), True, False)
+        self.mustascheright = pygame.image.load('Stache5.png').convert_alpha()
+        self.mustascheleft = pygame.image.load('Stache55.png').convert_alpha()
         self.image = self.walkingleft[0]
         self.rect = self.image.get_rect(height=85)
         self.living = True
         self.livingwall = True
+
     def move(self, x):
         self.left_right += x
         
@@ -45,7 +48,6 @@ class Player(pygame.sprite.Sprite):
             self.image = self.walkingleft[frame]
             if self.left_right == 0:
                 self.image = self.idle_left
-        #print(self.level.world_shift)
         
         # kontrollib kas mängija ja sein on kokku põrkunud
         wallcollide = pygame.sprite.spritecollide(self, self.walls, False)
@@ -86,8 +88,13 @@ class Player(pygame.sprite.Sprite):
             
     def jump(self):
         self.rect.y +=7
-        wallcollide = pygame.sprite.spritecollide   (self, self.walls, False)
+        wallcollide = pygame.sprite.spritecollide(self, self.walls, False)
         self.rect.y -=7
-        if len(wallcollide) > 0:
+        if wallcollide:
             self.up_down = -13
        
+    def mustache(self,screen):
+        if self.direction == "R":
+            screen.blit(self.mustascheright,(self.rect.x+5,self.rect.y+30))
+        else:
+            screen.blit(self.mustascheleft,(self.rect.x-35,self.rect.y+30))

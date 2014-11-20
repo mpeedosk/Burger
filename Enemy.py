@@ -89,15 +89,15 @@ class Enemy(object):
         self.enemy_ground.update()
         for enemy in self.enemy_flying:
 
-                #or enemy.rect.x >1500
                 if enemy.rect.x < -600:
                     self.enemy_flying.remove(enemy)
-                if enemy.type == 3:
+                    
+                if enemy.type == 1 or enemy.type == 3:
                     speedy = 2
                     if enemy.rect.x -px < -50:
-                        enemy.rect.x += 3
+                        enemy.rect.x += 4
                     elif enemy.rect.x-px > 10:
-                        enemy.rect.x -= 3                   
+                        enemy.rect.x -= 3                 
                 else:
                     speedy = 4
                     enemy.rect.x -= 5                  
@@ -114,6 +114,7 @@ class Enemy(object):
                     frame = (enemy.framerate//3 % len(enemy.flyleft))
                     enemy.image = enemy.flyleft[frame]
                 enemy.framerate +=1
+        
         for enemy in self.enemy_ground:
                 enemy.rect.x += enemy.speed
                 pos = enemy.rect.x - self.world_shift
@@ -127,10 +128,12 @@ class Enemy(object):
                     frame = (enemy.framerate//6 % len(enemy.moveleft))
                     enemy.image = enemy.moveleft[frame]
                 enemy.framerate +=1
+                
         for boss in self.boss:
             frame = (boss.framerate//6 % len(boss.boss))
             boss.image = boss.boss[frame]
-            boss.framerate += 1              
+            boss.framerate += 1
+            
     def shift_world(self, x):
         self.world_shift += x
         for enemy in self.enemy_flying:
@@ -139,10 +142,12 @@ class Enemy(object):
             enemy.rect.x +=x
         for enemy in self.boss:
             enemy.rect.x +=x
+
     def draw(self, screen):
         self.enemy_ground.draw(screen)
         self.enemy_flying.draw(screen)
         self.boss.draw(screen)
+
 class Enemy_1(Enemy):
     def __init__(self, player):
         Enemy.__init__(self, player)
@@ -150,16 +155,16 @@ class Enemy_1(Enemy):
     def add_ground_enemy(self):
         snails = [[1250,450,1250,1600,2],
                   [2073,450,2073,3071,8],
-                  [4157,380,4157,4320, 1],
+                  [4157,380,4157,4320,1],
                   [4525,312,4365,4531,1],
                   [4563,240,4563,4729,1],
                   [4936,170,4776,4940,1],
                   [5800,450,5720,5920,3],
-
                   ]
         for snail in snails:
             enemy = Enemy_stats(snail[0], snail[1], 2 , snail[2],snail[3], snail[4])
             self.enemy_ground.add(enemy)
+            
     def add_enemy(self):
         spawn_limit_x = [(-600, self.player.rect.x-500),(self.player.rect.x+400, 1400)]
         spawn_limit_y = [(-200, 300)]
@@ -172,38 +177,35 @@ class Enemy_2(Enemy):
         Enemy.__init__(self,player)
     def add_ground_enemy(self):
         rocky = [[3000,225,1140,1350,5],
-                     [3000,415,1920,2130,5],
-                     # 1 rida
-                     [2900,420,2900,3120,3],
-                     [2900,420,3120,3340,3],
-                     [2900,420,3340,3560,3],
-                     [2900,420,3560,3780,3],
-
-                     # 2 rida
-                     [3000,340,3010,3230,3],
-                     [3000,340,3230,3450,3],
-                     [3000,340,3450,3670,3],
-                     [3000,340,3670,3890,3],
-
-                     # 3 rida
-                     [2900,260,3120,3340,3],
-                     [2900,260,3340,3560,3],
-                     [2900,260,3560,3780,3],
-                     # 4 rida
-                     [3000,180,3230,3450,3],
-                     [3000,180,3450,3670,3],
-                     [3000,180,3670,3890,3],
-                     # 5 rida
-                     [2900,100,3340,3560,3],
-                     [2900,100,3560,3780,3],
-                     # 6 rida
-                     [3000,20,3450,3670,3],
-                     [3000,20,3670,3890,3],
-                     ]
+                 [3000,415,1920,2130,5],
+                 # 1 rida
+                 [2900,420,2900,3120,3],
+                 [2900,420,3120,3340,3],
+                 [2900,420,3340,3560,3],
+                 [2900,420,3560,3780,3],
+                 # 2 rida
+                 [3000,340,3010,3230,3],
+                 [3000,340,3230,3450,3],
+                 [3000,340,3450,3670,3],
+                 [3000,340,3670,3890,3],
+                 # 3 rida
+                 [2900,260,3120,3340,3],
+                 [2900,260,3340,3560,3],
+                 [2900,260,3560,3780,3],
+                 # 4 rida
+                 [3000,180,3230,3450,3],
+                 [3000,180,3450,3670,3],
+                 [3000,180,3670,3890,3],
+                 # 5 rida
+                 [2900,100,3340,3560,3],
+                 [2900,100,3560,3780,3],
+                 # 6 rida
+                 [3000,20,3450,3670,3],
+                 [3000,20,3670,3890,3],
+                 ]
         for rock in rocky:
             enemy = Enemy_stats(rock[2], rock[1], 4 , rock[2],rock[3], rock[4])
             self.enemy_ground.add(enemy)
-
             
     def add_enemy(self):
         spawn_limit_x = [(-600, self.player.rect.x-500)]
@@ -229,7 +231,9 @@ class Enemy_3(Enemy):
             enemy = Enemy_stats(fox[0], fox[1], 6 , fox[2], fox[3], fox[4])
             self.enemy_ground.add(enemy)
     def boss_axe_throw(self):
-        self.enemy_flying.add(Enemy_stats(2703 + self.world_shift, 330, 5,0,0,0))          
+        self.enemy_flying.add(Enemy_stats(2703 + self.world_shift, 330, 5,0,0,0))
     def add_enemy(self):
+        pass
+    def add_boss(self):
         enemy = Enemy_stats(2670 + self.world_shift, 180, "boss" , 0,0, 0)
         self.boss.add(enemy)

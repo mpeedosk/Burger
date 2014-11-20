@@ -108,8 +108,8 @@ class Level_1(Level):
         self.background_1 = pygame.image.load("sky.png").convert_alpha()
         self.background_2 = pygame.image.load("Ground.png").convert_alpha()
                     #picture, width, height, x , y
-        objects = [["Outside\Rock.png",50,104, 700, 396],
-                   ["Outside\Rock.png",50,227, 870, 273],
+        objects = [["World\Rock.png",50,104, 700, 396],
+                   ["World\Rock.png",50,227, 870, 273],
                    ["World\Platform_07.png", 140, 45, 1065, 150],
                    ["World\Platform_06.png", 140,45, 1065, 300],
                    ["World\Plat_YellowGreen.png", 110, 40, 2150, 230],
@@ -142,8 +142,7 @@ class Level_1(Level):
             self.wall_list.add(item)
             
         # liikuvad objektid, - pilt, pildi laius, kõrgus ,  x kordinaat, y kordinaat, x limiit, kiirus
-        moving_leftright = [#["Outside\Sand_Tile_Half_Round-01.png",150, 26, 2000, 375, 2400,3],
-                            ["World\Log.png", 92, 30, 1676, 552, 1932, 3],
+        moving_leftright = [["World\Log.png", 92, 30, 1676, 552, 1932, 3],
                             ["World\Small.png", 55, 25, 3125, 190, 3500, 8],
                             ["World\Log.png", 80, 26, 5000, 520, 5250, 2],
                             ]
@@ -163,7 +162,6 @@ class Level_1(Level):
                          ["World\Plat_Yellow_spikes.png", 150, 20, 3745, 180, 410, 2,2],
                          ["World\Plat_Grey.png", 100, 35, 5350, 120, 320, 2,1],
                          ["World\Plat_Grey.png", 100, 35, 5350, 260, 460, 2,1],
-                         #["Outside\Obstacle_Spike_Down.png",208, 9, 1400, 100, 500 , 6]
                         ]
         for i in moving_updown:
             item = Moving_Wall(i[0], i[1],i[2])
@@ -191,11 +189,9 @@ class Level_2(Level):
                    [False, 197 , 5 , 2698, 313],
                    [False, 5, 140 , 2890, 373],
                    [False, 5, 240 , 2698, 373],
+                   [False, 5, 1100, 3995, -500],
 
                    ["World\Plat_dung_1.png", 113, 18, 1150, 320],
-                   #["World\RockSD.png", 108, 30, 911, 470, 1111, 4],
-                   #["World\RockSD.png", 54, 30, 951, 440, 1111, 5],
-                   [False, 5, 1100, 3995, -500],
                    ]
         for i in objects:
             item = Wall(i[0],i[1],i[2])
@@ -205,20 +201,17 @@ class Level_2(Level):
             self.wall_list.add(item)
             
         # liikuvad objektid, - pilt, pildi laius, kõrgus ,  x kordinaat, y kordinaat, x limiit, kiirus
-        moving_leftright = [["World\RockSD_2.png", 145, 40, 871, 450, 1020, 5],
-                            #["World\RockSD.png", 145, 40, 2000, 430, 2200, 5],
-                            ]
+       
+        item = Moving_Wall("World\RockSD_2.png", 145,40)
+        item.rect.x = 871
+        item.rect.y= 450
+        item.limit_left = 871
+        item.limit_right = 1020
+        item.left_right = 5
+        item.player = self.player
+        item.level = self
+        self.wall_list.add(item)
         
-        for i in moving_leftright:
-            item = Moving_Wall(i[0], i[1],i[2])
-            item.rect.x = i[3]
-            item.rect.y= i[4]
-            item.limit_left = i[3]
-            item.limit_right = i[5]
-            item.left_right = i[6]
-            item.player = self.player
-            item.level = self
-            self.wall_list.add(item)
         # üles alla liikuvad objektid, pilt, pildi laius, pildi kõrgus, x kordinaat, y, kordinaat, y lim, kiirus
         moving_updown = [["World\Spikes4.png", 137, 107, 500, 30, 435, 5,2],
                          ["World\Spikes4.png", 137, 107, 637, 105, 450, 4,2],
@@ -279,27 +272,19 @@ class Level_3(Level):
             item.rect.y = i[4]
             item.player = self.player
             self.wall_list.add(item)
-            
-        moving_leftright = [["World\Plat_cave_2.png", 115, 18, 1100, 250, 1350, 5],
-                            #["World\RockSD.png", 145, 40, 2000, 430, 2200, 5],
-                            ]
-        
-        for i in moving_leftright:
-            item = Moving_Wall(i[0], i[1],i[2])
-            item.rect.x = i[3]
-            item.rect.y= i[4]
-            item.limit_left = i[3]
-            item.limit_right = i[5]
-            item.left_right = i[6]
-            item.player = self.player
-            item.level = self
-            self.wall_list.add(item)
+
+        item = Moving_Wall("World\Plat_cave_2.png", 115, 18)
+        item.rect.x = 1100
+        item.rect.y= 250
+        item.limit_left = 1100
+        item.limit_right = 1350
+        item.left_right = 5
+        item.player = self.player
+        item.level = self
+        self.wall_list.add(item)
             
         falling =[["World\Plat_cave_2.png", 113, 18, 1550, 120,1,1],
                   ["World\Plat_cave_2.png", 113, 18, 1900, 200,1,1],                  
-    #              ["World\Plat_dung_2.png", 113, 18, 1750, 190,2,1],
-     #             ["World\Plat_dung_4.png", 113, 18, 2000, 240,5,2],
-      #            ["World\Plat_dung_4.png", 113, 18, 2400, 440,5,3],
                     ]
         for i in falling:
             item = Falling_Plat(i[0],i[1],i[2])
@@ -310,16 +295,19 @@ class Level_3(Level):
             item.fallspeed = i[5]
             item.wall_list = self.wall_list
             item.falling = False
-            self.wall_list.add(item)           
+            self.wall_list.add(item)
+            
     def add_boss_wall(self):
         wall = Wall(False, 5,555)
         wall.rect.x = 2180 + self.world_shift 
         wall.rect.y = 0
         self.wall_list.add(wall)
+        
     def remove_boss_wall(self):
         for wall in self.wall_list:
             if wall.rect.height == 555:
                 self.wall_list.remove(wall)
+                
     def add_plat_up(self,up_down):
         item = UpDown_Plat("World\Plat_cave_2.png", 115, 18)
 
