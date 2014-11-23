@@ -14,12 +14,16 @@ class Enemy_stats(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         # level 1 vastased
         if enemy_type == 1:
+            self.flyright.clear()
+            self.flyleft.clear()
             for i in range(9):
                 self.flyright.append(pygame.image.load('Bird/Chicken/frame' + str(i)+ '.png').convert_alpha())
             for i in range(9):
                 self.flyleft.append(pygame.transform.flip(pygame.image.load('Bird/Chicken/frame' + str(i)+ '.png'), True, False))
             self.image = self.flyleft[0]
         elif enemy_type == 2:
+            self.moveleft.clear()
+            self.moveright.clear()
             for i in range(12):
                 self.moveleft.append(pygame.image.load('Bird/Snail/frame' + str(i)+ '.png').convert_alpha())
             for i in range(12):

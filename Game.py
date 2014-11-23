@@ -12,9 +12,9 @@ from GameObjects import *
 # konstandid
 
 
-def menu(not_paused = True,back_img = 'bg.png', full_scr = False):
-    pygame.mixer.stop()
+def menu(not_paused = True,back_img = 'bg.png', full_scr = False, sound = True, checked = True):
     pygame.mixer.music.pause()
+    pygame.mixer.stop()
     color = (255,255,255)
     colorbig = (255,255,255)
     if full_scr:
@@ -44,7 +44,8 @@ def menu(not_paused = True,back_img = 'bg.png', full_scr = False):
     menu.append(continue_game_rect)
     menu.append(quit_game_rect)
     ##
-
+    menu_wav = pygame.mixer.Sound('Sound\\World\menu1.wav')
+    menu_wav2 = pygame.mixer.Sound('Sound\\World\menu2.wav')
     soundon = pygame.image.load('SoundOn.png')
     soundoff = pygame.image.load('SoundOff.png')
 
@@ -56,19 +57,15 @@ def menu(not_paused = True,back_img = 'bg.png', full_scr = False):
     not_checked_img = pygame.image.load("notchecked.png")
     checked_rect = checked_img.get_rect()
     checked_rect.move_ip(190, 468)
-    checked = True
     full_scr_img = font0.render("fullscreen" , True, color)
     full_scr_rect = checked_img.get_rect()
     full_scr_rect.move_ip(190, 438)
-    full_scr = False
-
     choice = -1
     def outline(text,x,y):
             for pos in ((x-2,y+2),(x+2,y-2),(x-2,y-2),(x+2,y+2)):
-                screen.blit(text,pos)
+                screen.blit(text,pos)      
     x = -150
     y = 1
-    sound = True
     sound_rect = soundon.get_rect()
     sound_rect.move_ip(125,500)
     start_anim = True
@@ -76,17 +73,18 @@ def menu(not_paused = True,back_img = 'bg.png', full_scr = False):
     while True:
         for event in pygame.event.get(): # Vaatab millise eventiga parajasti teguon
             if event.type == MOUSEMOTION and not start_anim and not end_anim:
-              choice = Rect(event.pos,(0,0)).collidelist(menu)
+                choice = Rect(event.pos,(0,0)).collidelist(menu)
             elif event.type == MOUSEBUTTONUP and event.button == 1:
                 if menu[choice].collidepoint(event.pos):
                     if not_paused and choice == 1:
                         pass
                     else :
+                        menu_wav.play()
                         end_anim = True
                         break
-                elif sound_rect.collidepoint(event.pos): sound = not sound
-                elif checked_rect.collidepoint(event.pos): checked = not checked
-                elif full_scr_rect.collidepoint(event.pos): full_scr = not full_scr
+                elif sound_rect.collidepoint(event.pos): sound = not sound; menu_wav2.play()
+                elif checked_rect.collidepoint(event.pos): checked = not checked;menu_wav2.play()
+                elif full_scr_rect.collidepoint(event.pos): full_scr = not full_scr; menu_wav2.play()
             elif event.type == pygame.QUIT: # kui vajutatakse üleval X siis läheb tsükkel kinni
                 end_anim = True
                 break
@@ -101,6 +99,7 @@ def menu(not_paused = True,back_img = 'bg.png', full_scr = False):
                     if not_paused and choice == 1:
                         pass
                     else :
+                        menu_wav.play()
                         end_anim = True
                         break
         cx, cy = pygame.mouse.get_pos()
@@ -110,7 +109,6 @@ def menu(not_paused = True,back_img = 'bg.png', full_scr = False):
             screen.blit(start_big,(45,214))
         else:
             if x < 70:
-
                 screen.blit(start,(x,220))
             else:outline(start_shad,70,220); screen.blit(start,(70,220))
         if not not_paused:
@@ -134,8 +132,7 @@ def menu(not_paused = True,back_img = 'bg.png', full_scr = False):
         if not_paused:
             if sound:
                     screen.blit(soundon,(125,500))
-            else: screen.blit(soundoff,(125,500))
-
+            else: screen.blit(soundoff,(125,500)); pygame.mixer.stop()
             screen.blit(joke,(90, 470))
             if checked: screen.blit(checked_img,(190, 468))
             else: screen.blit(not_checked_img,(190, 468))
@@ -161,7 +158,8 @@ def heli_level(level_nr):
         pygame.mixer.music.play(-1)
         pygame.mixer.music.set_volume(0.6)
         walking.set_volume(0.6)
-def game(sound, meanjoke, full_scr):
+        
+def game(sound, clean, full_scr):
     running = True
     pygame.display.set_caption("Little Combat 2000") # mängu nimi
     time = pygame.time.Clock()
@@ -173,8 +171,7 @@ def game(sound, meanjoke, full_scr):
     cursor = pygame.image.load('Crosshair.png').convert_alpha()
 
     # game over
-    fontbig = pygame.font.Font(None, 92)
-    game_over = fontbig.render("Game Over" , True, (0,0,0))
+    youdied = pygame.image.load("Dead.png").convert_alpha() 
 
     # joke variables
     joketime = False
@@ -214,7 +211,7 @@ def game(sound, meanjoke, full_scr):
     power_level.append(Power_2(player))
     power_level.append(Power_3(player))
 
-    stars = 0
+    stars = 3
     
     #seinad ja platformid
     levels = []
@@ -241,7 +238,7 @@ def game(sound, meanjoke, full_scr):
 
     # praegune level
     ghost_sound = True
-    level_limit = [-5170,-3200,-2190]
+    level_limit = [-5170,-3190,-2190]
     current_level_nr = 0
     current_level = levels[current_level_nr]
     current_enemy = enemy_level[current_level_nr]
@@ -252,8 +249,8 @@ def game(sound, meanjoke, full_scr):
     #player
     living = True
     mustache = False
-    player.rect.x = 100
-    player.rect.y = 400
+    player.rect.x = 250
+    player.rect.y = 350
     player_sprite.add(player) 
     player.level = current_level
     level_shift = True
@@ -267,21 +264,23 @@ def game(sound, meanjoke, full_scr):
     state = 0
     while running:
         if not boss_pause:
-            if not level_shift or level_shift:
+            if not level_shift:
                 for event in pygame.event.get(): # Vaatab millise eventiga parajasti teguon
                     if event.type == pygame.QUIT: # kui vajutatakse üleval X siis läheb tsükkel kinni
                         running = False
                         state = 0
                     elif event.type == KEYDOWN: # kui hoida klahvi all, siis object liigub
-                        if event.key == K_ESCAPE:
-                            option = menu(False, 'bg_over.png', full_scr)[0]
+                        if event.key == K_ESCAPE and living:
+                            option = menu(False, full_scr = full_scr)[0]
                             pygame.mixer.music.unpause()
                             if option == 0:
-                                state = 1
+                                pygame.mixer.music.stop()
+                                state = 3
                                 running = False
                             elif option == 2:
                                 running = False
                                 state = 0
+                            
                     if event.type == KEYDOWN: # kui hoida klahvi all, siis object liigub
                         if event.key == K_RIGHT: # liigub paremale
                             if player.left_right == 0:
@@ -296,6 +295,8 @@ def game(sound, meanjoke, full_scr):
                             walking.play(-1)
                         elif event.key == K_UP:
                             player.jump()
+                        elif event.key == K_DOWN:
+                            pass 
                     elif event.type == KEYUP: # kui klahv üles tõuseb, siis liikumine lõppeb.  Esimese argumendi negatiivne vaste, et summa oleks 0
                         if event.key == K_RIGHT: # lõpetab paremale liikumise
                             player.move(-6)
@@ -310,7 +311,9 @@ def game(sound, meanjoke, full_scr):
                             if enemy.rect.collidepoint((cx, cy)):
                                 enemy_flying_wav.play()
                                 current_enemy.enemy_flying.remove(enemy)
-            
+            else:
+                if current_level_nr != 0: player.rect.x = 90
+                else: player.rect.x = 250
             #--- event lõpp ---
             if pygame.time.get_ticks() - spawn_timer >= cooldown:
                 if current_level_nr != 1:   
@@ -331,9 +334,14 @@ def game(sound, meanjoke, full_scr):
                     book_wav.play()
                     joke_play = True
                     when_joke = pygame.time.get_ticks()
-                    joke_nr = randint(0,115)
-                    joke1, text_x1, jokefont1 = current_power.joke_joke(screen, joke_nr,)
-                    joke2, text_x2, jokefont2= current_power.joke_punch(screen, joke_nr)
+                    if clean:
+                        joke_nr = randint(0,61)
+                        joke1, text_x1, jokefont1 = current_power.joke_joke_clean(screen, joke_nr)
+                        joke2, text_x2, jokefont2= current_power.joke_punch_clean(screen, joke_nr)   
+                    else:
+                        joke_nr = randint(0,119)
+                        joke1, text_x1, jokefont1 = current_power.joke_joke_both(screen, joke_nr)
+                        joke2, text_x2, jokefont2= current_power.joke_punch_both(screen, joke_nr)
                     joke11 = jokefont1.render(joke1, True, (0,0,0))
                     joke22 = jokefont2.render(joke2, True, (0,0,0))
                     if len(joke1)< 68: y1=2
@@ -347,14 +355,11 @@ def game(sound, meanjoke, full_scr):
                 elif collide.type == 'Orb.png':
                     invinc_wav.play()
                     mustache = True
-                    when_stache = pygame.time.get_ticks()
-
-                    
+                    when_stache = pygame.time.get_ticks()                    
             object_collide = pygame.sprite.spritecollide(player, current_objects.moving_object, False)
             for item in object_collide:
                 if item.type == "exp":
                     player.living = False
-
             if current_level_nr !=2:
                 enemy_collide_flying = pygame.sprite.spritecollide(player, current_enemy.enemy_flying, True)
             else:
@@ -419,13 +424,13 @@ def game(sound, meanjoke, full_scr):
                     current_enemy.enemy_flying.empty
                     current_enemy.enemy_ground.empty
                     current_level_nr = 1
-                    player.rect.x = 100
-                    stars = 0
+                    stars = 3
                     current_level = levels[current_level_nr]
                     current_power = power_level[current_level_nr]
                     current_objects = objects_level[current_level_nr]
                     player.level = current_level
                     mustache = False
+
                     
                 elif current_level_nr == 1:
                     level_shift = True
@@ -435,7 +440,6 @@ def game(sound, meanjoke, full_scr):
                     current_enemy.enemy_flying.empty
                     current_enemy.enemy_ground.empty
                     current_level_nr = 2
-                    player.rect.x = 100
                     current_level = levels[current_level_nr]
                     current_power = power_level[current_level_nr]
                     current_objects = objects_level[current_level_nr]
@@ -445,7 +449,7 @@ def game(sound, meanjoke, full_scr):
             # Tausta muutmine
             #lvl 1 lim
            # if player.rect.x > 500 and current_level.world_shift > -5170:
-            if world_shift and living:
+            if world_shift and living and not level_shift:
                     if player.rect.x > 500 and current_level.world_shift > level_limit[current_level_nr]:
                         shift = player.rect.x- 500
                         player.rect.x = 500
@@ -468,7 +472,13 @@ def game(sound, meanjoke, full_scr):
                         boss_pause = True
                         bomb_counter = 5
                         current_level.add_boss_wall()
-        
+        else:
+            for event in pygame.event.get(): # Vaatab millise eventiga parajasti teguon
+                if event.type == pygame.QUIT: # kui vajutatakse üleval X siis läheb tsükkel kinni
+                    running = False
+                    state = 0
+            player.left_right = 0
+            pygame.event.clear()
         ## Boss pause lõpp
 
         current_level.update()
@@ -520,21 +530,25 @@ def game(sound, meanjoke, full_scr):
         # sihiku paigaldamine
         cx, cy = pygame.mouse.get_pos() # hiire positsioon
         screen.blit(cursor,(cx-38,cy-38))
-        
         current_objects.stars(screen, stars)
 
         if living:
             if player.rect.y > 500 or (player.rect.y < -102 and current_level_nr == 2):
                 death_wav_2.play()
+                game_over_timer = pygame.time.get_ticks()
+
                 living = False
                 deadx = px
                 deady = py                
             if not player.livingwall:
+                game_over_timer = pygame.time.get_ticks()
+
                 living = False
                 death_wav.play()
                 deadx = px
                 deady = py
             if not player.living and not mustache :
+                game_over_timer = pygame.time.get_ticks()
                 #living = False
                 #death_wav.play()
                 deadx = px
@@ -546,11 +560,10 @@ def game(sound, meanjoke, full_scr):
             player_sprite.empty()
             walking.set_volume(0)
             current_enemy.enemy_flying.empty()
-            screen.blit(game_over, (253,247))
-            screen.blit(game_over, (253,253))
-            screen.blit(game_over, (247,253))
-            screen.blit(game_over, (247,247))          
-            screen.blit(fontbig.render("Game Over" , True, (217,217,25)), (250,250))
+            screen.blit(youdied, (253,247))
+            if pygame.time.get_ticks() - game_over_timer > 3000:
+                state = 1
+                break
         if not sound:
             pygame.mixer.stop()
             pygame.mixer.music.stop()
@@ -574,13 +587,11 @@ def game(sound, meanjoke, full_scr):
                 enemy_level[2].add_boss()
                 heli_level(current_level_nr)
         time.tick(60)
-
-        #print(player.rect.x)
+        print(player.rect.x)
         pygame.display.flip() # uuendab tervet ekraani
         pygame.display.set_caption("fps: " + str(round(time.get_fps())))
-        #pausi lõpp
-    return state 
-                
+    return state,full_scr, sound, clean
+
 if __name__ == '__main__':
     pygame.font.init()
     pygame.init()
@@ -589,15 +600,15 @@ if __name__ == '__main__':
     font0 = pygame.font.Font('norwester.otf',15)
     font1 = pygame.font.Font('norwester.otf',30)
     font2 = pygame.font.Font('norwester.otf',40)
-    mäng = False
+    mäng = [0,0,0,0]
     while True:
-        if mäng == 0:
+        if mäng[0] == 0:
             menüü = menu()
+        elif mäng[0] == 1:
+            menüü = menu(True, "bg_over.png", mäng[1], mäng[2], mäng[3])
         if menüü[0] == 0:
             mäng = game(menüü[1], menüü[2], menüü[3])
-            print(mäng)
-        elif menüü[0] == 1: break
-        elif menüü[0] == 2: break
-        else: break
-        if mäng == 0: break
+        elif menüü[0] == 2 or menüü[0] == -1: break
+        if mäng[0] == 0: break
+
     pygame.quit()

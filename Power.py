@@ -1,10 +1,18 @@
 import pygame
-f = open("naljad.txt")
-joke = []
-punchline = []
+f = open("clean.txt")
+joke_clean = []
+punchline_clean = []
 for rida in f:
-    joke.append(rida.split("/")[0].strip())
-    punchline.append(rida.split("/")[1].strip())
+    joke_clean.append(rida.split("/")[0].strip())
+    punchline_clean.append(rida.split("/")[1].strip())
+f.close()
+
+f = open("both.txt")
+joke_both = []
+punchline_both = []
+for rida in f:
+    joke_both.append(rida.split("/")[0].strip())
+    punchline_both.append(rida.split("/")[1].strip())
 f.close()
 
 def joke_font_size(jokelist, joke_nr):
@@ -47,16 +55,29 @@ class Powerlvl(object):
         self.world_shift+=x
         for power in self.power_list:
             power.rect.x += x
-    def joke_joke(self,screen, joke_nr):
-        joke_font = joke_font_size(joke, joke_nr)
+            
+    def joke_joke_clean(self,screen, joke_nr):
+        joke_font = joke_font_size(joke_clean, joke_nr)
         jokefont = pygame.font.Font('norwester.otf', joke_font)
-        text_x = 400 - jokefont.size(joke[joke_nr])[0]/2
-        return joke[joke_nr], text_x , jokefont
-    def joke_punch(self,screen, joke_nr):
-        joke_font = joke_font_size(punchline, joke_nr)
+        text_x = 400 - jokefont.size(joke_clean[joke_nr])[0]/2
+        return joke_clean[joke_nr], text_x , jokefont
+    
+    def joke_punch_clean(self,screen, joke_nr):
+        joke_font = joke_font_size(punchline_clean, joke_nr)
         jokefont = pygame.font.Font('norwester.otf', joke_font)
-        text_x = 400 - jokefont.size(punchline[joke_nr])[0]/2
-        return punchline[joke_nr], text_x , jokefont
+        text_x = 400 - jokefont.size(punchline_clean[joke_nr])[0]/2
+        return punchline_clean[joke_nr], text_x , jokefont
+    
+    def joke_joke_both(self,screen, joke_nr):
+        joke_font = joke_font_size(joke_both, joke_nr)
+        jokefont = pygame.font.Font('norwester.otf', joke_font)
+        text_x = 400 - jokefont.size(joke_both[joke_nr])[0]/2
+        return joke_both[joke_nr], text_x , jokefont
+    def joke_punch_both(self,screen, joke_nr):
+        joke_font = joke_font_size(punchline_both, joke_nr)
+        jokefont = pygame.font.Font('norwester.otf', joke_font)
+        text_x = 400 - jokefont.size(punchline_both[joke_nr])[0]/2
+        return punchline_both[joke_nr], text_x , jokefont
     def add_joke(self,x,y):
         power = PowerUp('Paper.png')
         power.rect.x = x + self.world_shift
