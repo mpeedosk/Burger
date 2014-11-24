@@ -29,9 +29,9 @@ class GameObject(object):
         #järjekord oluline
         self.layers = pygame.sprite.OrderedUpdates()
         for i in range(10):
-            self.countdown.append(pygame.image.load('Numbers/Nr'+str(i)+'.png').convert_alpha())
+            self.countdown.append(pygame.image.load('Graphics/UI/Numbers/Nr'+str(i)+'.png').convert_alpha())
         for i in range(4):
-            self.star_png.append(pygame.image.load('Bird\Stars\Star'+ str(i)+ '.png').convert_alpha())
+            self.star_png.append(pygame.image.load('Graphics/UI/Stars/Star'+ str(i)+ '.png').convert_alpha())
     def update(self):
         self.layers.update()
         self.moving_object.update()

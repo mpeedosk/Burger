@@ -59,7 +59,7 @@ class Falling_Plat(Wall):
 class UpDown_Plat(Wall):
     def update(self):
         self.rect.y += self.speed
-        if self.rect.top > 530 or self.rect.bottom < -102:
+        if self.rect.top > 530 or self.rect.bottom < -150:
             self.wall_list.remove(self)    
             
 class Moving_Wall(Wall):
@@ -108,19 +108,19 @@ class Level_1(Level):
         self.background_1 = pygame.image.load("sky.png").convert_alpha()
         self.background_2 = pygame.image.load("Ground.png").convert_alpha()
                     #picture, width, height, x , y
-        objects = [["World\Rock.png",50,104, 700, 396],
-                   ["World\Rock.png",50,227, 870, 273],
-                   ["World\Platform_07.png", 140, 45, 1065, 150],
-                   ["World\Platform_06.png", 140,45, 1065, 300],
-                   ["World\Plat_YellowGreen.png", 110, 40, 2150, 230],
-                   ["World\Plat_Grey.png", 50, 40, 2500, 330],
-                   ["World\Plat_Brown.png", 110, 40, 2650, 250],
-                   ["World\Plat_Grey.png", 110, 40, 3025, 350],
-                   ["World\Plat_Purp.png", 110, 40, 3370, 510],
-                   ["World\Platform_08.png", 110, 40, 2925, 180],
-                   ["World\Plat_Brown.png", 70, 40, 4280, 180],
-                   ["World\Plat_Brown.png", 30, 20, 5260, 80],
-                   ["World\Platform_08.png", 50, 20, 5500, 330],
+        objects = [["Graphics\World\Rock.png",50,104, 700, 396],
+                   ["Graphics\World\Rock.png",50,227, 870, 273],
+                   ["Graphics\World\Plat_teal_2.png", 140, 45, 1065, 150],
+                   ["Graphics\World\Plat_teal.png", 140,45, 1065, 300],
+                   ["Graphics\World\Plat_YellowGreen.png", 110, 40, 2150, 230],
+                   ["Graphics\World\Plat_Grey.png", 50, 40, 2500, 330],
+                   ["Graphics\World\Plat_Brown.png", 110, 40, 2650, 250],
+                   ["Graphics\World\Plat_Grey.png", 110, 40, 3025, 350],
+                   ["Graphics\World\Plat_Purp.png", 110, 40, 3370, 510],
+                   ["Graphics\World\Plat_Green.png", 110, 40, 2925, 180],
+                   ["Graphics\World\Plat_Brown.png", 70, 40, 4280, 180],
+                   ["Graphics\World\Plat_Brown.png", 30, 20, 5260, 80],
+                   ["Graphics\World\Plat_Green.png", 50, 20, 5500, 330],
                     # no picture, width, height, x, y
                    [False, 5,500, 0, 0],
                    [False, 5,500, 5970, 0],
@@ -142,9 +142,9 @@ class Level_1(Level):
             self.wall_list.add(item)
             
         # liikuvad objektid, - pilt, pildi laius, kõrgus ,  x kordinaat, y kordinaat, x limiit, kiirus
-        moving_leftright = [["World\Log.png", 92, 30, 1676, 552, 1932, 3],
-                            ["World\Small.png", 55, 25, 3125, 190, 3500, 8],
-                            ["World\Log.png", 80, 26, 5000, 520, 5250, 2],
+        moving_leftright = [["Graphics\World\Log.png", 92, 30, 1676, 552, 1932, 3],
+                            ["Graphics\World\Small.png", 55, 25, 3125, 190, 3500, 8],
+                            ["Graphics\World\Log.png", 80, 26, 5000, 520, 5250, 2],
                             ]
         
         for i in moving_leftright:
@@ -158,10 +158,10 @@ class Level_1(Level):
             item.level = self
             self.wall_list.add(item)
         # üles alla liikuvad objektid, pilt, pildi laius, pildi kõrgus, x kordinaat, y, kordinaat, y lim, kiirus
-        moving_updown = [["World\Wood.png", 42, 42, 2023, 285, 494, 6,2],
-                         ["World\Plat_Yellow_spikes.png", 150, 20, 3745, 180, 410, 2,2],
-                         ["World\Plat_Grey.png", 100, 35, 5350, 120, 320, 2,1],
-                         ["World\Plat_Grey.png", 100, 35, 5350, 260, 460, 2,1],
+        moving_updown = [["Graphics\World\Wood.png", 42, 42, 2023, 285, 494, 6,2],
+                         ["Graphics\World\Plat_Yellow_spikes.png", 150, 20, 3745, 180, 410, 2,2],
+                         ["Graphics\World\Plat_Grey.png", 100, 35, 5350, 120, 320, 2,1],
+                         ["Graphics\World\Plat_Grey.png", 100, 35, 5350, 260, 460, 2,1],
                         ]
         for i in moving_updown:
             item = Moving_Wall(i[0], i[1],i[2])
@@ -191,7 +191,7 @@ class Level_2(Level):
                    [False, 5, 240 , 2698, 373],
                    [False, 5, 1100, 3995, -500],
 
-                   ["World\Plat_dung_1.png", 113, 18, 1150, 320],
+                   ["Graphics\World\Plat_dung_1.png", 113, 18, 1150, 320],
                    ]
         for i in objects:
             item = Wall(i[0],i[1],i[2])
@@ -202,7 +202,7 @@ class Level_2(Level):
             
         # liikuvad objektid, - pilt, pildi laius, kõrgus ,  x kordinaat, y kordinaat, x limiit, kiirus
        
-        item = Moving_Wall("World\RockSD_2.png", 145,40)
+        item = Moving_Wall("Graphics\World\Rock4.png", 145,40)
         item.rect.x = 871
         item.rect.y= 450
         item.limit_left = 871
@@ -213,10 +213,10 @@ class Level_2(Level):
         self.wall_list.add(item)
         
         # üles alla liikuvad objektid, pilt, pildi laius, pildi kõrgus, x kordinaat, y, kordinaat, y lim, kiirus
-        moving_updown = [["World\Spikes4.png", 137, 107, 500, 30, 435, 5,2],
-                         ["World\Spikes4.png", 137, 107, 637, 105, 450, 4,2],
-                         ["World\Spikes4.png", 137, 107, 774, 180, 465, 3,2],
-                         ["World\Plat_dung_1.png", 113, 18, 2200, 200,460,2,2],
+        moving_updown = [["Graphics\World\Spikes.png", 137, 107, 500, 30, 435, 5,2],
+                         ["Graphics\World\Spikes.png", 137, 107, 637, 105, 450, 4,2],
+                         ["Graphics\World\Spikes.png", 137, 107, 774, 180, 465, 3,2],
+                         ["Graphics\World\Plat_dung_1.png", 113, 18, 2200, 200,460,2,2],
 
                         ]
         for i in moving_updown:
@@ -231,11 +231,11 @@ class Level_2(Level):
             item.level = self
             self.wall_list.add(item)
             
-        falling =[["World\Plat_dung_2.png", 113, 18, 1300, 200,1,1],
-                  ["World\Plat_dung_2.png", 113, 18, 1500, 120,1,1],                  
-                  ["World\Plat_dung_2.png", 113, 18, 1750, 190,2,1],
-                  ["World\Plat_dung_4.png", 113, 18, 2000, 240,5,2],
-                  ["World\Plat_dung_4.png", 113, 18, 2400, 440,5,3],
+        falling =[["Graphics\World\Plat_dung_2.png", 113, 18, 1300, 200,1,1],
+                  ["Graphics\World\Plat_dung_2.png", 113, 18, 1500, 120,1,1],                  
+                  ["Graphics\World\Plat_dung_2.png", 113, 18, 1750, 190,2,1],
+                  ["Graphics\World\Plat_dung_4.png", 113, 18, 2000, 240,5,2],
+                  ["Graphics\World\Plat_dung_4.png", 113, 18, 2400, 440,5,3],
                     ]
         for i in falling:
             item = Falling_Plat(i[0],i[1],i[2])
@@ -252,18 +252,18 @@ class Level_3(Level):
         Level.__init__(self, player)
         self.background_1 = pygame.image.load("CaveBack2.png").convert_alpha()
         self.background_2 = pygame.image.load("CaveGround.png").convert_alpha()
-        self.plat_2 = pygame.image.load("World\Plat_dung_2.png").convert_alpha()
+        self.plat_2 = pygame.image.load("Graphics\World\Plat_dung_2.png").convert_alpha()
         objects = [[False, 5,500, 0, 0],
                    [False, 2308, 5, 0, 500],
                    [False, 400, 5, 2738, 500],
                    [False, 5, 500, 2990, 0],
                    #
-                   ["World\Platform_cave_1.png", 150, 20, 390, 320],
-                   ["World\Platform_cave_1.png", 150, 20, 630, 220],
-                   ["World\Platform_cave_1.png", 150, 20, 870, 120],
-                   ["World\Rock2.png", 48, 174, 972, 326],
-                   ["World\Rock2.png", 30, 70, 1825, 430],
-                   ["World\Rock2.png", 30, 113, 2145, 387],
+                   ["Graphics\World\Rock3.png", 150, 20, 390, 320],
+                   ["Graphics\World\Rock3.png", 150, 20, 630, 220],
+                   ["Graphics\World\Rock3.png", 150, 20, 870, 120],
+                   ["Graphics\World\Rock2.png", 48, 174, 972, 326],
+                   ["Graphics\World\Rock2.png", 30, 70, 1825, 430],
+                   ["Graphics\World\Rock2.png", 30, 113, 2145, 387],
 
                    ]
         for i in objects:
@@ -273,7 +273,7 @@ class Level_3(Level):
             item.player = self.player
             self.wall_list.add(item)
 
-        item = Moving_Wall("World\Plat_cave_2.png", 115, 18)
+        item = Moving_Wall("Graphics\World\Plat_dung_3.png", 115, 18)
         item.rect.x = 1100
         item.rect.y= 250
         item.limit_left = 1100
@@ -283,8 +283,8 @@ class Level_3(Level):
         item.level = self
         self.wall_list.add(item)
             
-        falling =[["World\Plat_cave_2.png", 113, 18, 1550, 120,1,1],
-                  ["World\Plat_cave_2.png", 113, 18, 1900, 200,1,1],                  
+        falling =[["Graphics\World\Plat_dung_3.png", 113, 18, 1550, 120,1,1],
+                  ["Graphics\World\Plat_dung_3.png", 113, 18, 1900, 200,1,1],                  
                     ]
         for i in falling:
             item = Falling_Plat(i[0],i[1],i[2])
@@ -309,7 +309,7 @@ class Level_3(Level):
                 self.wall_list.remove(wall)
                 
     def add_plat_up(self,up_down):
-        item = UpDown_Plat("World\Plat_cave_2.png", 115, 18)
+        item = UpDown_Plat("Graphics\World\Plat_dung_3.png", 115, 18)
 
         if up_down == "down":
             item.rect.x = 2570 + self.world_shift

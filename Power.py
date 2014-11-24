@@ -1,4 +1,5 @@
 import pygame
+
 f = open("clean.txt")
 joke_clean = []
 punchline_clean = []
@@ -42,7 +43,7 @@ class PowerUp(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.type = filename
 
-class Powerlvl(object):
+class Powerlvl():
     world_shift = 0
     def __init__(self, player):
         self.power_list = pygame.sprite.Group()
@@ -137,6 +138,7 @@ class Power_3(Powerlvl):
                       [972, 280,'Paper.png'],
                       [1580, 75,'Paper.png'],
                       [1935, 160,'Orb.png'],
+                      [2922, 465, 'Burger.png'],
                       ]
         for item in powerjokes:
             power = PowerUp(item[2])

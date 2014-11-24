@@ -1,7 +1,7 @@
 import pygame
 from random import randint
 # types
-# bird = 1
+# Graphics/Enemy/Level. = 1
 # snail = 2
 class Enemy_stats(pygame.sprite.Sprite):
     flyright = []
@@ -17,17 +17,17 @@ class Enemy_stats(pygame.sprite.Sprite):
             self.flyright.clear()
             self.flyleft.clear()
             for i in range(9):
-                self.flyright.append(pygame.image.load('Bird/Chicken/frame' + str(i)+ '.png').convert_alpha())
+                self.flyright.append(pygame.image.load('Graphics/Enemy/Level 1/Chicken/frame' + str(i)+ '.png').convert_alpha())
             for i in range(9):
-                self.flyleft.append(pygame.transform.flip(pygame.image.load('Bird/Chicken/frame' + str(i)+ '.png'), True, False))
+                self.flyleft.append(pygame.transform.flip(pygame.image.load('Graphics/Enemy/Level 1/Chicken/frame' + str(i)+ '.png'), True, False))
             self.image = self.flyleft[0]
         elif enemy_type == 2:
             self.moveleft.clear()
             self.moveright.clear()
             for i in range(12):
-                self.moveleft.append(pygame.image.load('Bird/Snail/frame' + str(i)+ '.png').convert_alpha())
+                self.moveleft.append(pygame.image.load('Graphics/Enemy/Level 1/Snail/frame' + str(i)+ '.png').convert_alpha())
             for i in range(12):
-                self.moveright.append(pygame.transform.flip(pygame.image.load('Bird/Snail/frame' + str(i)+ '.png'), True, False))
+                self.moveright.append(pygame.transform.flip(pygame.image.load('Graphics/Enemy/Level 1/Snail/frame' + str(i)+ '.png'), True, False))
             self.image = self.moveleft[0]
             
         # level 2 vastased
@@ -35,17 +35,17 @@ class Enemy_stats(pygame.sprite.Sprite):
             self.flyright.clear()
             self.flyleft.clear()
             for i in range(9):
-                self.flyright.append(pygame.image.load('Bird/Butterbat/frame' + str(i)+ '.png').convert_alpha())
+                self.flyright.append(pygame.image.load('Graphics/Enemy/Level 2/Butterbat/frame' + str(i)+ '.png').convert_alpha())
             for i in range(9):
-                self.flyleft.append(pygame.transform.flip(pygame.image.load('Bird/Butterbat/frame' + str(i)+ '.png'), True, False))
+                self.flyleft.append(pygame.transform.flip(pygame.image.load('Graphics/Enemy/Level 2/Butterbat/frame' + str(i)+ '.png'), True, False))
             self.image = self.flyright[0]
         elif enemy_type ==4:
             self.moveleft.clear()
             self.moveright.clear()
             for i in range(9):
-                self.moveleft.append(pygame.image.load('Bird/Rock/frame' + str(i)+ '.png').convert_alpha())
+                self.moveleft.append(pygame.image.load('Graphics/Enemy/Level 2/Rock/frame' + str(i)+ '.png').convert_alpha())
             for i in range(9):
-                self.moveright.append(pygame.transform.flip(pygame.image.load('Bird/Rock/frame' + str(i)+ '.png'), True, False))
+                self.moveright.append(pygame.transform.flip(pygame.image.load('Graphics/Enemy/Level 2/Rock/frame' + str(i)+ '.png'), True, False))
             self.image = self.moveleft[0]
             
         # level 3 vastased
@@ -53,7 +53,7 @@ class Enemy_stats(pygame.sprite.Sprite):
             self.flyright.clear()
             self.flyleft.clear()
             for i in range(6):
-                self.flyright.append(pygame.image.load('Bird/Axe/frame' + str(i)+ '.png').convert_alpha())
+                self.flyright.append(pygame.image.load('Graphics/Enemy/Level 3/Axe/frame' + str(i)+ '.png').convert_alpha())
             self.flyleft = self.flyright
             self.image = self.flyright[0]
             
@@ -61,13 +61,13 @@ class Enemy_stats(pygame.sprite.Sprite):
             self.moveleft.clear()
             self.moveright.clear()
             for i in range(6):
-                self.moveleft.append(pygame.image.load('Bird/SilverFox/frame' + str(i)+ '.png').convert_alpha())
+                self.moveleft.append(pygame.image.load('Graphics/Enemy/Level 3/SilverFox/frame' + str(i)+ '.png').convert_alpha())
             for i in range(6):
-                self.moveright.append(pygame.transform.flip(pygame.image.load('Bird/SilverFox/frame' + str(i)+ '.png'), True, False))
+                self.moveright.append(pygame.transform.flip(pygame.image.load('Graphics/Enemy/Level 3/SilverFox/frame' + str(i)+ '.png'), True, False))
             self.image = self.moveleft[0]
         else:
             for i in range(51):
-                self.boss.append(pygame.image.load('Bird/Boss/frame' + str(i)+ '.png').convert_alpha())
+                self.boss.append(pygame.image.load('Graphics/Enemy/Level 3/Boss/frame' + str(i)+ '.png').convert_alpha())
             self.image = self.boss[0]
         self.type = enemy_type
         self.rect = self.image.get_rect()

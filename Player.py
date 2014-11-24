@@ -16,12 +16,12 @@ class Player(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         
         for i in range(8):
-            self.walkingright.append(pygame.image.load('Bird/Masked/frame' + str(i)+ '.png').convert_alpha())
+            self.walkingright.append(pygame.image.load('Graphics/Player/frame' + str(i)+ '.png').convert_alpha())
 
         for i in range(8):
-            self.walkingleft.append(pygame.transform.flip(pygame.image.load('Bird/Masked/frame' + str(i)+ '.png'), True, False))
-        self.idle_right = pygame.image.load('Bird/Masked/Idle.png').convert_alpha()
-        self.idle_left = pygame.transform.flip(pygame.image.load('Bird/Masked/Idle.png'), True, False)
+            self.walkingleft.append(pygame.transform.flip(pygame.image.load('Graphics/Player/frame' + str(i)+ '.png'), True, False))
+        self.idle_right = pygame.image.load('Graphics/Player/Idle.png').convert_alpha()
+        self.idle_left = pygame.transform.flip(pygame.image.load('Graphics/Player/Idle.png'), True, False)
         self.mustascheright = pygame.image.load('Stache5.png').convert_alpha()
         self.mustascheleft = pygame.image.load('Stache55.png').convert_alpha()
         self.image = self.walkingleft[0]
