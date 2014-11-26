@@ -105,8 +105,8 @@ class Moving_Wall(Wall):
 class Level_1(Level):
     def __init__(self, player):
         Level.__init__(self, player)
-        self.background_1 = pygame.image.load("sky.png").convert_alpha()
-        self.background_2 = pygame.image.load("Ground.png").convert_alpha()
+        self.background_1 = pygame.image.load("Graphics/Background/Level 1 Back.png").convert_alpha()
+        self.background_2 = pygame.image.load("Graphics/Background/Level 1 Ground.png").convert_alpha()
                     #picture, width, height, x , y
         objects = [["Graphics\World\Rock.png",50,104, 700, 396],
                    ["Graphics\World\Rock.png",50,227, 870, 273],
@@ -120,7 +120,7 @@ class Level_1(Level):
                    ["Graphics\World\Plat_Green.png", 110, 40, 2925, 180],
                    ["Graphics\World\Plat_Brown.png", 70, 40, 4280, 180],
                    ["Graphics\World\Plat_Brown.png", 30, 20, 5260, 80],
-                   ["Graphics\World\Plat_Green.png", 50, 20, 5500, 330],
+                   ["Graphics\World\Plat_Green.png", 50, 20, 5510, 330],
                     # no picture, width, height, x, y
                    [False, 5,500, 0, 0],
                    [False, 5,500, 5970, 0],
@@ -144,7 +144,7 @@ class Level_1(Level):
         # liikuvad objektid, - pilt, pildi laius, kõrgus ,  x kordinaat, y kordinaat, x limiit, kiirus
         moving_leftright = [["Graphics\World\Log.png", 92, 30, 1676, 552, 1932, 3],
                             ["Graphics\World\Small.png", 55, 25, 3125, 190, 3500, 8],
-                            ["Graphics\World\Log.png", 80, 26, 5000, 520, 5250, 2],
+                            ["Graphics\World\Log.png", 80, 26, 5000, 520, 5200, 2],
                             ]
         
         for i in moving_leftright:
@@ -160,8 +160,8 @@ class Level_1(Level):
         # üles alla liikuvad objektid, pilt, pildi laius, pildi kõrgus, x kordinaat, y, kordinaat, y lim, kiirus
         moving_updown = [["Graphics\World\Wood.png", 42, 42, 2023, 285, 494, 6,2],
                          ["Graphics\World\Plat_Yellow_spikes.png", 150, 20, 3745, 180, 410, 2,2],
-                         ["Graphics\World\Plat_Grey.png", 100, 35, 5350, 120, 320, 2,1],
-                         ["Graphics\World\Plat_Grey.png", 100, 35, 5350, 260, 460, 2,1],
+                         ["Graphics\World\Plat_Grey.png", 100, 35, 5350, 120, 335, 2,1],
+                         ["Graphics\World\Plat_Grey.png", 100, 35, 5350, 260, 475, 2,1],
                         ]
         for i in moving_updown:
             item = Moving_Wall(i[0], i[1],i[2])
@@ -179,8 +179,8 @@ class Level_1(Level):
 class Level_2(Level):
     def __init__(self, player):
         Level.__init__(self, player)
-        self.background_1 = pygame.image.load("DungeonWall.png").convert_alpha()
-        self.background_2 = pygame.image.load("DungeonGround.png").convert_alpha()
+        self.background_1 = pygame.image.load("Graphics/Background/Level 2 Back.png").convert_alpha()
+        self.background_2 = pygame.image.load("Graphics/Background/Level 2 Ground.png").convert_alpha()
                     #picture, width, height, x , y
         objects = [[False, 5,500, 0, 0],
                    [False, 5,500, 5970, 0],
@@ -250,8 +250,8 @@ class Level_2(Level):
 class Level_3(Level):
     def __init__(self, player):
         Level.__init__(self, player)
-        self.background_1 = pygame.image.load("CaveBack2.png").convert_alpha()
-        self.background_2 = pygame.image.load("CaveGround.png").convert_alpha()
+        self.background_1 = pygame.image.load("Graphics/Background/Level 3 Back.png").convert_alpha()
+        self.background_2 = pygame.image.load("Graphics/Background/Level 3 Ground.png").convert_alpha()
         self.plat_2 = pygame.image.load("Graphics\World\Plat_dung_2.png").convert_alpha()
         objects = [[False, 5,500, 0, 0],
                    [False, 2308, 5, 0, 500],

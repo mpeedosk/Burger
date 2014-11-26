@@ -22,8 +22,8 @@ class Player(pygame.sprite.Sprite):
             self.walkingleft.append(pygame.transform.flip(pygame.image.load('Graphics/Player/frame' + str(i)+ '.png'), True, False))
         self.idle_right = pygame.image.load('Graphics/Player/Idle.png').convert_alpha()
         self.idle_left = pygame.transform.flip(pygame.image.load('Graphics/Player/Idle.png'), True, False)
-        self.mustascheright = pygame.image.load('Stache5.png').convert_alpha()
-        self.mustascheleft = pygame.image.load('Stache55.png').convert_alpha()
+        self.mustascheright = pygame.image.load('Graphics/Player/StacheR.png').convert_alpha()
+        self.mustascheleft = pygame.image.load('Graphics/Player/StacheL.png').convert_alpha()
         self.image = self.walkingleft[0]
         self.rect = self.image.get_rect(height=85)
         self.living = True

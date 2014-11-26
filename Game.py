@@ -46,7 +46,7 @@ def menu(not_paused = True,back_img = 'bg.png', full_scr = False, sound = True, 
     menu.append(continue_game_rect)
     menu.append(quit_game_rect)
     
-    bg = pygame.image.load(back_img).convert_alpha()
+    bg = pygame.image.load("Graphics/Background/" + back_img).convert_alpha()
 
     choice = -1
     x = -150
@@ -77,6 +77,10 @@ def menu(not_paused = True,back_img = 'bg.png', full_scr = False, sound = True, 
                     if sound: menu_wav2.play()
                 elif full_scr_rect.collidepoint(event.pos):
                     full_scr = not full_scr
+                    if full_scr:
+                        screen = pygame.display.set_mode((gamewidth, gameheight), FULLSCREEN)
+                    else:
+                        screen = pygame.display.set_mode((gamewidth, gameheight))
                     if sound:menu_wav2.play()
             elif event.type == pygame.QUIT: # kui vajutatakse üleval X siis läheb tsükkel kinni
                 end_anim = True
@@ -160,9 +164,9 @@ def menu(not_paused = True,back_img = 'bg.png', full_scr = False, sound = True, 
 
 def heli_level(level_nr, sound):
         global enemy_ground_wav, enemy_flying_wav, walking
-        enemy_ground_wav = pygame.mixer.Sound('Sound\\Level ' + str(level_nr+1)+ '\crack.wav')
-        enemy_flying_wav = pygame.mixer.Sound('Sound\\Level ' + str(level_nr+1)+ '\Bird.ogg')
-        walking = pygame.mixer.Sound('Sound\\Level ' + str(level_nr+1)+ '\Right_left.wav')
+        enemy_ground_wav = pygame.mixer.Sound('Sound\\Level ' + str(level_nr+1)+ '\Ground.ogg')
+        enemy_flying_wav = pygame.mixer.Sound('Sound\\Level ' + str(level_nr+1)+ '\Flying.ogg')
+        walking = pygame.mixer.Sound('Sound\\Level ' + str(level_nr+1)+ '\Walking.ogg')
         pygame.mixer.music.load('Sound/Level ' + str(level_nr+1)+ '/Theme.ogg')
         if sound: pygame.mixer.music.play(-1)
         pygame.mixer.music.set_volume(0.6)
@@ -217,7 +221,7 @@ def game(sound, clean, full_scr):
     # praegune level
     ghost_sound = True
     level_limit = [-5170,-3190,-2190]
-    current_level_nr = 0
+    current_level_nr = 1
     current_level = levels[current_level_nr]
     current_enemy = enemy_level[current_level_nr]
     current_power = power_level[current_level_nr]
@@ -227,7 +231,6 @@ def game(sound, clean, full_scr):
     #player
     living = True
     mustache = False
-    player.rect.x = 250
     player.rect.y = 350
     player_sprite.add(player) 
     player.level = current_level
@@ -303,7 +306,7 @@ def game(sound, clean, full_scr):
                                 current_enemy.enemy_flying.remove(enemy)
             else:
                 if current_level_nr != 0: player.rect.x = 90
-                else: player.rect.x = 250
+                else: player.rect.x = 350
             #--- event lõpp ---
             if pygame.time.get_ticks() - spawn_timer >= cooldown:
                 if current_level_nr != 1:   
@@ -339,7 +342,7 @@ def game(sound, clean, full_scr):
                     if len(joke2)< 68: y2=2
                     else: y2 = 1
                     joketime = True         
-                elif collide.type == 'Star2.png':
+                elif collide.type == 'Star.png':
                     stars += 1
                     if sound:star_wav.play()
                 elif collide.type == 'Orb.png':
@@ -558,7 +561,7 @@ def game(sound, clean, full_scr):
             player_sprite.empty()
             walking.set_volume(0)
             current_enemy.enemy_flying.empty()
-            screen.blit(youdied, (253,247))
+            screen.blit(youdied, (247,256))
             if pygame.time.get_ticks() - game_over_timer > 3000:
                 state = 1
                 break
@@ -626,35 +629,35 @@ if __name__ == '__main__':
     joke = font0.render("clean jokes" , True, color)
     
     # menu audio
-    menu_wav = pygame.mixer.Sound('Sound\\World\menu1.wav')
-    menu_wav2 = pygame.mixer.Sound('Sound\\World\menu2.wav')
+    menu_wav = pygame.mixer.Sound('Sound\\World\Menu1.ogg')
+    menu_wav2 = pygame.mixer.Sound('Sound\\World\Menu2.ogg')
     # menüü graafika
-    soundon = pygame.image.load('SoundOn.png').convert_alpha()
-    soundoff = pygame.image.load('SoundOff.png').convert_alpha()
-    cursor = pygame.image.load('Crosshair.png').convert_alpha()
-    checked_img = pygame.image.load("checked.png").convert_alpha()
-    not_checked_img = pygame.image.load("notchecked.png").convert_alpha()
+    soundon = pygame.image.load('Graphics/UI/SoundOn.png').convert_alpha()
+    soundoff = pygame.image.load('Graphics/UI/SoundOff.png').convert_alpha()
+    cursor = pygame.image.load('Graphics/UI/Crosshair.png').convert_alpha()
+    checked_img = pygame.image.load("Graphics/UI/checked.png").convert_alpha()
+    not_checked_img = pygame.image.load("Graphics/UI/notchecked.png").convert_alpha()
     
     # mängu konstandid
-    game_credits_img = pygame.image.load('credits.png').convert_alpha()
+    game_credits_img = pygame.image.load('Graphics/Background/credits.png').convert_alpha()
     player_dead = pygame.image.load('Graphics/Player/Dead.png').convert_alpha()
     level_logo = []
     for i in range(3):
-        level_logo.append(pygame.image.load('Level'+str(i+1)+'.png').convert_alpha())
-    boss_hp_bar = pygame.image.load('boss_hp.png').convert_alpha()
-    boss_hp_bar_back = pygame.image.load('boss_hp_back.png').convert_alpha()
-    youdied = pygame.image.load("Dead.png").convert_alpha() 
+        level_logo.append(pygame.image.load('Graphics/Background/Level'+str(i+1)+'.png').convert_alpha())
+    boss_hp_bar = pygame.image.load('Graphics/UI/Boss/boss_hp.png').convert_alpha()
+    boss_hp_bar_back = pygame.image.load('Graphics/UI/Boss/boss_hp_back.png').convert_alpha()
+    youdied = pygame.image.load("Graphics/Background/Dead.png").convert_alpha() 
     
     # mängu heliefektid 
-    joke_wav = pygame.mixer.Sound('Sound\\World\Joke2.wav')
-    book_wav =  pygame.mixer.Sound('Sound\\World\Book2.wav')
-    star_wav = pygame.mixer.Sound('Sound\\World\Star.wav')
-    death_wav = pygame.mixer.Sound('Sound\\World\death.wav')
-    death_wav_2 = pygame.mixer.Sound('Sound\\World\die2.wav')
-    invinc_hit_wav = pygame.mixer.Sound('Sound\\World\swosh.wav')
-    invinc_wav = pygame.mixer.Sound('Sound\\World\Coolio.wav')
-    game_credits_wav = pygame.mixer.Sound('Sound\\World\credits.ogg')
-    ghost_wav = pygame.mixer.Sound('Sound\\Level 2\Isee.wav')
+    joke_wav = pygame.mixer.Sound('Sound\\World\Drum.ogg')
+    book_wav =  pygame.mixer.Sound('Sound\\World\Book.ogg')
+    star_wav = pygame.mixer.Sound('Sound\\World\Star.ogg')
+    death_wav = pygame.mixer.Sound('Sound\\World\Death2.ogg')
+    death_wav_2 = pygame.mixer.Sound('Sound\\World\Death.ogg')
+    invinc_hit_wav = pygame.mixer.Sound('Sound\\World\Hit.ogg')
+    invinc_wav = pygame.mixer.Sound('Sound\\World\Stache.ogg')
+    game_credits_wav = pygame.mixer.Sound('Sound\\World\Credits.ogg')
+    ghost_wav = pygame.mixer.Sound('Sound\\Level 2\Ghost.ogg')
 
 
     while True:

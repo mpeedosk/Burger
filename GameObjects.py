@@ -2,16 +2,14 @@ import pygame
 from Power import *
 
 class AllObject(pygame.sprite.Sprite):
-    frames = []
     countdown = []
-    
     def __init__(self, image_data, width, height, object_type):
         pygame.sprite.Sprite.__init__(self)
+        self.frames = []
         if object_type == 1:
             self.image = pygame.image.load(image_data)
             self.image = pygame.transform.scale(self.image,(width, height))
         elif object_type == 2:
-            self.frames.clear()
             for i in range(width):
                 self.frames.append(pygame.image.load(image_data + str(i)+ '.png').convert_alpha())
             self.image = self.frames[0]
@@ -40,12 +38,17 @@ class GameObject(object):
             frame = (enemy.framerate//6 % len(enemy.frames))
             enemy.image = enemy.frames[frame]
             enemy.framerate +=1
-            if frame > enemy.framelim:
+            if enemy.type == "fire":
+                enemy.framerate += 1
+            elif enemy.type == "crow" and enemy.framerate > 1106:
                 self.moving_object.remove(enemy)
-                if enemy.type == "bomb":
-                    self.explosion()
-                elif enemy.type == "exp":
-                    self.joke = True
+            if enemy.framelim > 0:
+                if frame > enemy.framelim:
+                    self.moving_object.remove(enemy)
+                    if enemy.type == "bomb":
+                        self.explosion()
+                    elif enemy.type == "exp":
+                        self.joke = True
 
     def draw(self, screen):
         self.normal_object.draw(screen)
@@ -91,20 +94,32 @@ class GameObject(object):
         else:
             screen.blit(self.star_png[3],(10,10))        
 
+        
 class Object_1(GameObject):
     def __init__(self):
         GameObject.__init__(self)
-        pass
+        fire = AllObject('Graphics/World/Fire/frame', 22,0, 2)
+        fire.rect.x = 230 + self.world_shift
+        fire.rect.y = 405
+        fire.type = "fire"
+        self.moving_object.add(fire)
+
 class Object_2(GameObject):
     def __init__(self):
         GameObject.__init__(self)
-        pass    
+        
+        crow = AllObject('Graphics/World/Crow/frame', 92,0, 2)
+        crow.rect.x = 265 + self.world_shift
+        crow.rect.y = 10
+        crow.type = "crow"
+        self.moving_object.add(crow)
+
 class Object_3(GameObject):
     def __init__(self):
         GameObject.__init__(self)
-        hp = [["boss_hp_back.png", 256, 64,1,1],
-              ["boss_hp_fill.png", 226, 64,2,1],
-              ["boss_hp.png", 256, 64,3,1],
+        hp = [["Graphics/UI/Boss/boss_hp_back.png", 256, 64,1,1],
+              ["Graphics/UI/Boss/boss_hp_fill.png", 226, 64,2,1],
+              ["Graphics/UI/Boss/boss_hp.png", 256, 64,3,1],
             ]
 
         for h in hp:
@@ -115,19 +130,19 @@ class Object_3(GameObject):
             self.layers.add(health)
             
     def add_pot(self):
-        bomb = AllObject('Bird/Pot/frame', 45,43, 2)
+        bomb = AllObject('Graphics/PowerUp/Pot/frame', 45,43, 2)
         bomb.rect.x = 2220 + self.world_shift
         bomb.rect.y = 405
         bomb.type = "bomb"
         self.moving_object.add(bomb)
     def explosion(self):
-        exp = AllObject('Bird/Explosion/frame', 19, 17, 2)
+        exp = AllObject('Graphics/PowerUp/Explosion/frame', 19, 17, 2)
         exp.rect.x = 2185 + self.world_shift 
         exp.rect.y = 340
         exp.type = "exp"
         self.moving_object.add(exp)
     def add_head(self):
-        head = AllObject('Bird/Horsehead.png',224,189, 1)
+        head = AllObject('Graphics/Enemy/Level 3/Boss/Horsehead.png',224,189, 1)
         head.rect.x = self.world_shift + 2755
         head.rect.y = 320
         self.normal_object.add(head)
