@@ -82,7 +82,7 @@ def menu(not_paused = True,back_img = 'bg.png', full_scr = False, sound = True, 
                     else:
                         screen = pygame.display.set_mode((gamewidth, gameheight))
                     if sound:menu_wav2.play()
-            elif event.type == pygame.QUIT: # kui vajutatakse üleval X siis läheb tsükkel kinni
+            elif event.type == pygame.QUIT: # kui vajutatakse leval X siis laheb tsykkel kinni
                 end_anim = True
                 break
             elif event.type == KEYDOWN: # kui hoida klahvi all, siis object liigub
@@ -193,7 +193,7 @@ def game(sound, clean, full_scr):
     power_level.append(Power_2(player))
     power_level.append(Power_3(player))
 
-    stars = 3
+    stars = 0
     
     #seinad ja platformid
     levels = []
@@ -221,7 +221,7 @@ def game(sound, clean, full_scr):
     # praegune level
     ghost_sound = True
     level_limit = [-5170,-3190,-2190]
-    current_level_nr = 1
+    current_level_nr = 0
     current_level = levels[current_level_nr]
     current_enemy = enemy_level[current_level_nr]
     current_power = power_level[current_level_nr]
@@ -241,13 +241,14 @@ def game(sound, clean, full_scr):
     dmg_boss = False
     boss_living = True
     bomb_counter = 0
+    cheat = False
     new_game = False
     state = 0
     while running:
         if not boss_pause:
             if not level_shift:
                 for event in pygame.event.get(): # Vaatab millise eventiga parajasti teguon
-                    if event.type == pygame.QUIT: # kui vajutatakse üleval X siis läheb tsükkel kinni
+                    if event.type == pygame.QUIT: # kui vajutatakse yleval X siis laheb tsykkel kinni
                         running = False
                         state = 0
                     elif event.type == KEYDOWN: # kui hoida klahvi all, siis object liigub
@@ -274,7 +275,6 @@ def game(sound, clean, full_scr):
                                 running = False
                                 state = 0
                             
-                    if event.type == KEYDOWN: # kui hoida klahvi all, siis object liigub
                         if event.key == K_RIGHT: # liigub paremale
                             if player.left_right == 0:
                                 player.direction = "R"
@@ -286,15 +286,19 @@ def game(sound, clean, full_scr):
                                 player.direction = "L"
                             player.move(-6)
                             if sound:walking.play(-1)
+                        elif event.key == K_p:
+                            print("cheat")
+                            cheat = not cheat
+                            
                         elif event.key == K_UP:
                             player.jump()
                         elif event.key == K_DOWN:
                             pass 
-                    elif event.type == KEYUP: # kui klahv üles tõuseb, siis liikumine lõppeb.  Esimese argumendi negatiivne vaste, et summa oleks 0
-                        if event.key == K_RIGHT: # lõpetab paremale liikumise
+                    elif event.type == KEYUP: # kui klahv yles t6useb, siis liikumine l6ppeb.  Esimese argumendi negatiivne vaste, et summa oleks 0
+                        if event.key == K_RIGHT: # l6petab paremale liikumise
                             player.move(-6)
                             walking.stop()
-                        elif event.key == K_LEFT: # lõpetab vasakule liikumise
+                        elif event.key == K_LEFT: # l6petab vasakule liikumise
                             player.move(6)
                             walking.stop()
                     elif event.type == MOUSEBUTTONDOWN and event.button == 1:
@@ -307,7 +311,7 @@ def game(sound, clean, full_scr):
             else:
                 if current_level_nr != 0: player.rect.x = 90
                 else: player.rect.x = 350
-            #--- event lõpp ---
+            #--- event l6pp ---
             if pygame.time.get_ticks() - spawn_timer >= cooldown:
                 if current_level_nr != 1:   
                     current_enemy.add_enemy()
@@ -408,7 +412,7 @@ def game(sound, clean, full_scr):
                     boss_living = False
                     current_objects.add_head()
 
-            # mängija kordinaatide küsimine
+            # mangija kordinaatide kysimine
             px = player.rect.x
             py = player.rect.y
             # spritede uuendamine
@@ -475,12 +479,12 @@ def game(sound, clean, full_scr):
                         current_level.add_boss_wall()
         else:
             for event in pygame.event.get(): # Vaatab millise eventiga parajasti teguon
-                if event.type == pygame.QUIT: # kui vajutatakse üleval X siis läheb tsükkel kinni
+                if event.type == pygame.QUIT: # kui vajutatakse yleval X siis laheb tsykkel kinni
                     running = False
                     state = 0
             player.left_right = 0
             pygame.event.clear()
-        ## Boss pause lõpp
+        ## Boss pause l6pp
 
         current_level.update()
         
@@ -497,7 +501,7 @@ def game(sound, clean, full_scr):
         # tausta kuvamine
         current_level.draw(screen)
         current_objects.draw(screen)
-        # mängija kuvamine ekraanile 
+        # mangija kuvamine ekraanile 
         player_sprite.draw(screen)
 
         if mustache and living:
@@ -532,30 +536,31 @@ def game(sound, clean, full_scr):
         cx, cy = pygame.mouse.get_pos() # hiire positsioon
         screen.blit(cursor,(cx-38,cy-38))
         current_objects.stars(screen, stars)
-
+        if cheat: screen.blit(checked_img,(778,0))
         if living:
-            if player.rect.y > 500 or (player.rect.y < -102 and current_level_nr == 2):
-                if sound:death_wav_2.play()
-                game_over_timer = pygame.time.get_ticks()
+            if not cheat: 
+                if player.rect.y > 500 or (player.rect.y < -102 and current_level_nr == 2):
+                    if sound:death_wav_2.play()
+                    game_over_timer = pygame.time.get_ticks()
 
-                living = False
-                deadx = px
-                deady = py                
-            if not player.livingwall:
-                game_over_timer = pygame.time.get_ticks()
+                    living = False
+                    deadx = px
+                    deady = py                
+                if not player.livingwall:
+                    game_over_timer = pygame.time.get_ticks()
 
-                living = False
-                if sound:death_wav.play()
-                deadx = px
-                deady = py
-            if not player.living and not mustache :
-                game_over_timer = pygame.time.get_ticks()
-                #living = False
-                #if sound:death_wav.play()
-                deadx = px
-                deady = py
-            else:
-                player.living = True
+                    living = False
+                    if sound:death_wav.play()
+                    deadx = px
+                    deady = py
+                if not player.living and not mustache :
+                    game_over_timer = pygame.time.get_ticks()
+                    living = False
+                    if sound:death_wav.play()
+                    deadx = px
+                    deady = py
+                else:
+                    player.living = True
         else:
             screen.blit(player_dead,(deadx,deady+40))
             player_sprite.empty()
@@ -601,12 +606,12 @@ if __name__ == '__main__':
     screen = pygame.display.set_mode((gamewidth, gameheight))
     pygame.display.set_caption("Where's my burger")
     gamewidth = 800     # ekraani laius x
-    gameheight = 600    # ekraani kõrgus y
-    mäng = [0,0,0,0]
+    gameheight = 600    # ekraani k6rgus y
+    mang = [0,0,0,0]
     color = (255,255,255)
     pygame.mouse.set_visible(False)
     
-    #menüü fontid/text
+    #menyy fontid/text
     
     font0 = pygame.font.Font('norwester.otf',15)
     font1 = pygame.font.Font('norwester.otf',30)
@@ -631,14 +636,14 @@ if __name__ == '__main__':
     # menu audio
     menu_wav = pygame.mixer.Sound('Sound\\World\Menu1.ogg')
     menu_wav2 = pygame.mixer.Sound('Sound\\World\Menu2.ogg')
-    # menüü graafika
+    # menyy graafika
     soundon = pygame.image.load('Graphics/UI/SoundOn.png').convert_alpha()
     soundoff = pygame.image.load('Graphics/UI/SoundOff.png').convert_alpha()
     cursor = pygame.image.load('Graphics/UI/Crosshair.png').convert_alpha()
     checked_img = pygame.image.load("Graphics/UI/checked.png").convert_alpha()
     not_checked_img = pygame.image.load("Graphics/UI/notchecked.png").convert_alpha()
     
-    # mängu konstandid
+    # mangu konstandid
     game_credits_img = pygame.image.load('Graphics/Background/credits.png').convert_alpha()
     player_dead = pygame.image.load('Graphics/Player/Dead.png').convert_alpha()
     level_logo = []
@@ -648,7 +653,7 @@ if __name__ == '__main__':
     boss_hp_bar_back = pygame.image.load('Graphics/UI/Boss/boss_hp_back.png').convert_alpha()
     youdied = pygame.image.load("Graphics/Background/Dead.png").convert_alpha() 
     
-    # mängu heliefektid 
+    # mangu heliefektid 
     joke_wav = pygame.mixer.Sound('Sound\\World\Drum.ogg')
     book_wav =  pygame.mixer.Sound('Sound\\World\Book.ogg')
     star_wav = pygame.mixer.Sound('Sound\\World\Star.ogg')
@@ -661,15 +666,15 @@ if __name__ == '__main__':
 
 
     while True:
-        if mäng[0] == 0:
-            menüü = menu()
-        elif mäng[0] == 1:
-            menüü = menu(True, "bg_over.png", mäng[1], mäng[2], mäng[3])
-        elif mäng[0] == 4:
-            menüü = menu(True, "bg_end.png", mäng[1], mäng[2], mäng[3])            
-        if menüü[0] == 0:
-            mäng = game(menüü[1], menüü[2], menüü[3])
-        elif menüü[0] == 2 or menüü[0] == -1: break
-        if mäng[0] == 0: break
+        if mang[0] == 0:
+            menyy = menu()
+        elif mang[0] == 1:
+            menyy = menu(True, "bg_over.png", mang[1], mang[2], mang[3])
+        elif mang[0] == 4:
+            menyy = menu(True, "bg_end.png", mang[1], mang[2], mang[3])            
+        if menyy[0] == 0:
+            mang = game(menyy[1], menyy[2], menyy[3])
+        elif menyy[0] == 2 or menyy[0] == -1: break
+        if mang[0] == 0: break
 
     pygame.quit()
