@@ -516,8 +516,8 @@ def game(sound, clean, full_scr,current_level_nr):
                     level_shift_time = pygame.time.get_ticks()
                     pygame.mixer.stop() # lõpetab muusika esituse
                     pygame.mixer.music.stop()
-                    current_enemy.enemy_flying.empty # kustutab olemasolevad vastased ära
-                    current_enemy.enemy_ground.empty
+                    current_enemy.enemy_flying.empty() # kustutab olemasolevad vastased ära
+                    current_enemy.enemy_ground.empty()
                     current_level_nr = 1 # muudab leveli numbrit
                     stars = 0 # nullib tähed ära
                     current_level = levels[current_level_nr] # uued levelid jne
@@ -531,8 +531,8 @@ def game(sound, clean, full_scr,current_level_nr):
                     level_shift_time = pygame.time.get_ticks()
                     pygame.mixer.stop()
                     pygame.mixer.music.stop()
-                    current_enemy.enemy_flying.empty
-                    current_enemy.enemy_ground.empty
+                    current_enemy.enemy_flying.empty()
+                    current_enemy.enemy_ground.empty()
                     current_level_nr = 2
                     current_level = levels[current_level_nr]
                     current_power = power_level[current_level_nr]
@@ -564,7 +564,7 @@ def game(sound, clean, full_scr,current_level_nr):
                     world_shift = False # tekistab maailma nihkumise
                     bomb_counter = 5 # pommi loenduri paneb 5
                     current_level.add_boss_wall() # lisab seina juurde, et mängija bossi juurest ära ei jookseks
-                    current_enemy.spike_list.empty
+                    current_enemy.spike_list.empty()
         else:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT: 
