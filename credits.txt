@@ -1,0 +1,52 @@
+IMAGES
+enemys:
+chicken - http://www.glitchthegame.com/public-domain-game-art/
+snail - http://www.spriters-resource.com/pc_computer/maplestory/sheet/21687/
+bat - http://www.glitchthegame.com/public-domain-game-art/
+rock - http://www.glitchthegame.com/public-domain-game-art/
+axe - http://www.glitchthegame.com/public-domain-game-art/
+boss - http://www.glitchthegame.com/public-domain-game-art/
+fox - http://www.glitchthegame.com/public-domain-game-art/
+
+player:
+http://www.glitchthegame.com/public-domain-game-art/
+
+powerups:
+burger, orb, paper, star, pot- http://www.glitchthegame.com/public-domain-game-art/
+
+UI:
+checked - http://www.glitchthegame.com/public-domain-game-art/
+numbers - GameArtForge -/ http://opengameart.org/content/numbers-blocks-set-01
+crosshair - fluxord -/ http://opengameart.org/content/20-crosshairs-for-re
+boss healthbar - Paul Wortmann -/ http://opengameart.org/content/enemy-health-bars
+
+World:
+http://www.glitchthegame.com/public-domain-game-art/
+crow,fire - http://www.glitchthegame.com/public-domain-game-art/
+explosion - http://opengameart.org/content/explosion
+
+backgrounds:
+level 1 - Vickie666 -/ http://vickie666.deviantart.com/art/Forgotten-Visions-319788528
+level 2 - Vickie666 -/ http://vickie666.deviantart.com/art/Haunted-Castle-317531378
+level 3 - The Cry Of Angels -/ http://rehail.deviantart.com/art/The-Cry-Of-Angels-207822176
+menu - Dark -/ http://www.deviantart.com/art/Dark-58746378
+credits - burger -/ http://jarn.deviantart.com/art/burger-8524368
+level123 back,ground - http://www.glitchthegame.com/public-domain-game-art/, http://opengameart.org/content/free-platformer-asset-pack-dungeon
+
+FONT - norwester http://jamiewilson.io/norwester/
+
+SOUNDS:
+http://freesound.org/people/jorickhoofd/sounds/160045/
+http://soundimage.org/fantasywonder/
+http://soundimage.org/horrorsurreal/
+http://soundimage.org/funnyquirky/
+http://freesound.org/people/natharra/sounds/71470/
+http://freesound.org/people/smidoid/sounds/49139/
+Michel Baradari - http://opengameart.org/content/11-male-human-paindeath-sounds
+Blender Foundation - http://opengameart.org/content/grass-foot-step-sounds-yo-frankie
+http://freesound.org/people/IEDlabs/sounds/82318/
+http://freesound.org/people/gelo_papas/sounds/47340/
+http://freesound.org/people/esperri/sounds/118970/
+http://freesound.org/people/Yoyodaman234/sounds/166507/
+http://freesound.org/people/Yoyodaman234/sounds/166511/
+

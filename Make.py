@@ -4,7 +4,7 @@ import sys
 base = None
 if sys.platform == "win32":
     base = "Win32GUI"
-executables = [cx_Freeze.Executable("Game.pyw",icon="Icon.ico",base = base)]
+executables = [cx_Freeze.Executable("Game.pyw",icon="Burger.ico",base = base)]
 cx_Freeze.setup(
     name = "Where's my burger",
     version = "1.0",
