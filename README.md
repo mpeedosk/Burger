@@ -31,6 +31,7 @@ Programmeerimine 2014 projekt, platformer
 ## Kontrollid
  * Nooltega saab liikuda
  * 'esc' - mängu pausile panemine
+ 
 ### Cheats
  * 'p' - god mode, ehk loomad ei saa tappa, kuid objektid küll
 
